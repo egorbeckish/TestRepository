@@ -68,3 +68,38 @@ FROM
 --|...        |...        |...        |...     |...               |...       |...       |...   |...           |...       |...          |...     |
 --|126        |Irene      |Mikkilineni|IMIKKILI|650.124.1224      |1998-09-28|PU_CLERK  |2 700 |              |120       |50           |        |
 ```
+
+Запрос 4. [Вывод значений столбца job_id](#query4)
+```sql
+SELECT
+	job_id
+FROM
+	employees;
+
+--|job_id    |
+--|----------|
+--|AD_PRES   |
+--|AD_VP     |
+--|AD_VP     |
+--|IT_PROG   |
+--|IT_PROG   |
+--|...       |
+--|PU_CLERK  |
+```
+
+Запрос 5. [Вывод значений столбца job_id без дублирования](#query5)
+```sql
+SELECT
+	DISTINCT job_id
+FROM
+	employees;
+
+--|job_id    |
+--|----------|
+--|SH_CLERK  |
+--|AD_VP     |
+--|SA_MAN    |
+--|...       |
+--|AC_ACCOUNT|
+
+```
