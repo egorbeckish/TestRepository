@@ -13,7 +13,12 @@ SELECT [ALL|DISTINCT] {список столбцов или выражений}
 
 Запрос 1. [Вывод содержимого одного столбца](#query1)
 
-```
+```sql
+SELECT
+	employee_id
+FROM
+	employees;
+
 |employee_id|
 |-----------|
 |100        |
