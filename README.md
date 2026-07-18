@@ -18,7 +18,7 @@ SELECT
 	employee_id
 FROM
 	employees;
-
+----------------
 |employee_id|
 |-----------|
 |100        |
