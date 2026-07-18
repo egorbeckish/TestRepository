@@ -1,10 +1,25 @@
-# Section Heading
+Оператор **SELECT** предназначен для выборки данных из таблиц, то есть он реализует одно из основных назначений базы данных — предоставлять пользователю информацию. Результатом выполнения оператора **SELECT** является таблица.
 
-Some body text of this section.
+Структура оператора представлена в следующем виде:
+```sql
+SELECT [ALL|DISTINCT] {список столбцов или выражений}
+[FROM {список таблиц}]
+[WHERE {условия выбора}]
+[GROUP BY {столбцы группировки}]
+[HAVING {условия на группу}];
+[ORDER BY {столбцы сортировки [ASC|DESC]}]
+[LIMIT {N}][OFFSET{M}];
+```
 
-<a name="my-custom-anchor-point"></a>
-Some text I want to provide a direct link to, but which doesn't have its own heading.
+Запрос 1. [Вывод содержимого одного столбца](#query1)
 
-(… more content…)
-
-[A link to that custom anchor](#my-custom-anchor-point)
+```
+|employee_id|
+|-----------|
+|100        |
+|101        |
+|102        |
+|103        |
+|...        |
+|126        |
+```
