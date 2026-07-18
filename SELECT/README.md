@@ -11,7 +11,7 @@ SELECT [ALL|DISTINCT] {список столбцов или выражений}
 [LIMIT {N}][OFFSET{M}];
 ```
 
-Запрос 1. [Вывод содержимого одного столбца](https://github.com/egorbeckish/TestRepository/blob/main/sql/query1.sql)
+Запрос 1. [Вывод содержимого одного столбца](https://github.com/egorbeckish/TestRepository/blob/main/SELECT/sql/query1.sql)
 ```sql
 SELECT
 	employee_id
@@ -29,7 +29,7 @@ FROM
 --|126        |
 ```
 
-Запрос 2. [Вывод содержимого нескольких столбцов](https://github.com/egorbeckish/TestRepository/blob/main/sql/query2.sql)
+Запрос 2. [Вывод содержимого нескольких столбцов](https://github.com/egorbeckish/TestRepository/blob/main/SELECT/sql/query2.sql)
 ```sql
 SELECT
 	employee_id,
@@ -51,7 +51,7 @@ FROM
 --|126        |Irene      |Mikkilineni|50           |
 ```
 
-Запрос 3. [Вывод значений всех столбцов](https://github.com/egorbeckish/TestRepository/blob/main/sql/query3.sql)
+Запрос 3. [Вывод значений всех столбцов](https://github.com/egorbeckish/TestRepository/blob/main/SELECT/sql/query3.sql)
 ```sql
 SELECT
 	*
@@ -69,7 +69,7 @@ FROM
 --|126        |Irene      |Mikkilineni|IMIKKILI|650.124.1224      |1998-09-28|PU_CLERK  |2 700 |              |120       |50           |        |
 ```
 
-Запрос 4. [Вывод значений столбца job_id](https://github.com/egorbeckish/TestRepository/blob/main/sql/query4.sql)
+Запрос 4. [Вывод значений столбца job_id](https://github.com/egorbeckish/TestRepository/blob/main/SELECT/sql/query4.sql)
 ```sql
 SELECT
 	job_id
@@ -87,7 +87,7 @@ FROM
 --|PU_CLERK  |
 ```
 
-Запрос 5. [Вывод значений столбца job_id без дублирования](https://github.com/egorbeckish/TestRepository/blob/main/sql/query5.sql)
+Запрос 5. [Вывод значений столбца job_id без дублирования](https://github.com/egorbeckish/TestRepository/blob/main/SELECT/sql/query5.sql)
 ```sql
 SELECT
 	DISTINCT job_id
