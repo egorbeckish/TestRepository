@@ -1,15 +1,12 @@
-Выражение **BETWEEN** используется для того, чтобы результат запроса содержал только те строки, в которых значение проверяемого столбца находится в заданном диапазоне, включая его границы.
+Выражение **IN** используется для того, чтобы результат запроса содержал только те строки, в которых значение проверяемого столбца совпадает с одним из значений, указанных в списке.
 
 ```sql
 SELECT {список столбцов}
 FROM {список таблица}
-WHERE {имя столбца} BETWEEN V_MIN AND V_MAX;  -- ({имя столбца} >= V_MIN) AND ({имя столбца} <= V_MAX)
+WHERE {имя столбца} IN {список значений};
 ```
----
-> - V_MIN — нижняя граница диапазона;
-> - V_MAX — верхняя граница диапазона.
 
-Запрос 1. [Вывести данные о сотрудниках, зарплата которых находится в определенном диапазоне](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/BETWEEN/query1)
+Запрос 1. [Вывести данные о сотрудниках, которые работают в отделах с определёнными номерами](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query1.sql)
 ```sql
 SELECT
 	employee_id,
@@ -19,25 +16,24 @@ SELECT
 FROM
 	employees
 WHERE
-	salary BETWEEN 6000 AND 8000;
+	department_id IN (40, 10, 110);
 
---|employee_id|first_name |last_name|department_id|
---|-----------|-----------|---------|-------------|
---|104        |Bruce      |Ernst    |60           |
---|111        |Ismael     |Sciarra  |100          |
---|112        |Jose Manuel|Urman    |100          |
---|...        |...        |...      |...          |
---|203        |Susan      |Mavris   |40           |
+--|employee_id|first_name|last_name|department_id|
+--|-----------|----------|---------|-------------|
+--|200        |Jennifer  |Whalen   |10           |
+--|203        |Susan     |Mavris   |40           |
+--|205        |Shelley   |Higgins  |110          |
+--|206        |William   |Gietz    |110          |
 ```
 
-Запрос 2. [Получить данные о договорах, дата заключения которых лежит в определенном диапазоне](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/BETWEEN/query2)
+Запрос 2. [Вывести данные о договорах, заключённых в определённые даты](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query2.sql)
 ```sql
 SELECT
 	*
 FROM
 	orders
 WHERE
-	order_date BETWEEN '01.09.2019' AND '30.09.2019';
+	order_date IN ('07.09.19', '14.09.19', '19.09.19');
 
 --|order_id|customer_id|status |salesman_id|order_date|
 --|--------|-----------|-------|-----------|----------|
@@ -47,25 +43,7 @@ WHERE
 --|96      |46         |Shipped|179        |2019-09-14|
 ```
 
-Запрос 3. [Получить данные о договорах, дата заключения которых не лежит в определенном диапазоне](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/BETWEEN/query3)
-```sql
-SELECT
-	*
-FROM
-	orders
-WHERE
-	order_date NOT BETWEEN '01.09.2019' AND '30.09.2019';
-
---|order_id|customer_id|status  |salesman_id|order_date|
---|--------|-----------|--------|-----------|----------|
---|8       |28         |Shipped |155        |2020-03-21|
---|32      |25         |Shipped |158        |2019-04-19|
---|35      |24         |Shipped |160        |2018-12-11|
---|...     |...        |...     |...        |...       |
---|59      |70         |Shipped |           |2017-07-29|
-```
-
-Запрос 4. [Получить данные о сотрудниках, работающих в отделе 50, имена которых начинаются с букв в диапазоне от A до B (содержит ошибку)](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/BETWEEN/query4)
+Запрос 3. [Вывести данные о сотрудниках, которые не работают в отделах с определёнными номерами](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query3.sql)
 ```sql
 SELECT
 	employee_id,
@@ -75,39 +53,74 @@ SELECT
 FROM
 	employees
 WHERE
-	department_id = 50
-	AND first_name BETWEEN 'A' AND 'B';
+	department_id NOT IN (30, 50, 60, 80, 90, 100);
 
 --|employee_id|first_name|last_name|department_id|
 --|-----------|----------|---------|-------------|
---|121        |Adam      |Fripp    |50           |
---|185        |Alexis    |Bull     |50           |
---|187        |Anthony   |Cabrio   |50           |
---|196        |Alana     |Walsh    |50           |
+--|200        |Jennifer  |Whalen   |10           |
+--|201        |Michael   |Hartstein|20           |
+--|202        |Pat       |Fay      |20           |
+--|203        |Susan     |Mavris   |40           |
+--|204        |Hermann   |Baer     |70           |
+--|205        |Shelley   |Higgins  |110          |
+--|206        |William   |Gietz    |110          |
+```
+
+Запрос 4. [Вывести названия городов, которые расположены в США (country_id = 'US') или Канаде (country_id = 'CA') и имеют почтовый индекс, заканчивающийся цифрой 2](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query4.sql)
+```sql
+SELECT
+	city
+FROM
+	locations
+WHERE
+	country_id IN ('US', 'CA')
+	AND (postal_code LIKE '%2');
+
+--|city      |
+--|----------|
+--|Southlake |
+--|Whitehorse|
+```
+
+Запрос 5. [Вывести данные о сотрудниках, которые работают в отделах с определёнными номерами, и о сотрудниках, у которых не задан номер отдела (содержит ошибку)](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query5.sql)
+
+---
+> Если список значений в **IN** будет содержать **NULL**, то результат выполнения оператора не будет содержать строк, у которых проверяемый столбец имеет значение **NULL**, так как результат сравнения с **NULL** имеет значение **НЕ ОПРЕДЕЛЕНО** (**UNKNOWN**).
+```sql
+SELECT
+	employee_id,
+	first_name,
+	last_name,
+	department_id
+FROM
+	employees
+WHERE
+	department_id IN (40, 10, 110, NULL);
+
+--|employee_id|first_name|last_name|department_id|
+--|-----------|----------|---------|-------------|
+--|200        |Jennifer  |Whalen   |10           |
+--|203        |Susan     |Mavris   |40           |
+--|205        |Shelley   |Higgins  |110          |
+--|206        |William   |Gietz    |110          |
+```
+
+Запрос 6. [Вывести данные о сотрудниках, которые не работают в отделах с определёнными номерами](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/IN/query6.sql)
+```sql
+SELECT
+	employee_id,
+	first_name,
+	last_name,
+	department_id
+FROM
+	employees
+WHERE
+	department_id NOT IN (30, 50, 60, 80, 90, 100, NULL);
+
+--|employee_id|first_name|last_name|department_id|
+--|-----------|----------|---------|-------------|
 ```
 ---
-> Анализ результатов этого запроса показывает, что данные о сотрудниках, чьи имена начинаются на букву B, в результат выполнения запроса не попали, хотя такие сотрудники есть, например Britney.
+> Результат выполнения этого запроса не будет содержать строк. Это произойдёт потому, что оператор: ```X NOT IN (A_1, A_2, ..., A_i)``` эквивалентен выражению ```X <> A_1 AND X <> A_2 AND ... AND X <> A_i```
 
-> Это происходит потому, что значение строки 'B' меньше значения строки 'Britney', поэтому данные о сотрудниках, чьи имена начинаются на букву B, в результат выполнения запроса не попали. Эту проблему можно решить, указав в качестве верхнего диапазона следующую букву.
-
-Запрос 5. [Получить данные о сотрудниках, работающих в отделе 50, имена которых начинаются с букв в диапазоне от A до B](https://github.com/egorbeckish/ArtificialIntelligence/tree/main/SQL+PL-pgSQL/SQL/OperatorsStructure/BETWEEN/query5)
-```sql
-SELECT
-	employee_id,
-	first_name,
-	last_name,
-	department_id
-FROM
-	employees
-WHERE
-	department_id = 50
-	AND first_name BETWEEN 'A' AND 'C';
-
---|employee_id|first_name|last_name|department_id|
---|-----------|----------|---------|-------------|
---|121        |Adam      |Fripp    |50           |
---|185        |Alexis    |Bull     |50           |
---|187        |Anthony   |Cabrio   |50           |
---|193        |Britney   |Everett  |50           |
---|196        |Alana     |Walsh    |50           |
-```
+> Если одно из ```A_i``` будет иметь значение **NULL**, то результат этого выражения будет иметь значение **НЕ ОПРЕДЕЛЕНО** (**UNKNOWN**).
