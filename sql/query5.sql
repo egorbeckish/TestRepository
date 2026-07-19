@@ -1,26 +1,18 @@
 SELECT
-	DISTINCT job_id
+	employee_id,
+	first_name,
+	last_name,
+	department_id
 FROM
-	employees;
+	employees
+WHERE
+	department_id = 50
+	AND first_name BETWEEN 'A' AND 'C';
 
---|job_id    |
---|----------|
---|SH_CLERK  |
---|AD_VP     |
---|SA_MAN    |
---|PU_MAN    |
---|IT_PROG   |
---|ST_CLERK  |
---|FI_MGR    |
---|PU_CLERK  |
---|HR_REP    |
---|ST_MAN    |
---|MK_MAN    |
---|AC_MGR    |
---|SA_REP    |
---|AD_ASST   |
---|PR_REP    |
---|MK_REP    |
---|AD_PRES   |
---|FI_ACCOUNT|
---|AC_ACCOUNT|
+--|employee_id|first_name|last_name|department_id|
+--|-----------|----------|---------|-------------|
+--|121        |Adam      |Fripp    |50           |
+--|185        |Alexis    |Bull     |50           |
+--|187        |Anthony   |Cabrio   |50           |
+--|193        |Britney   |Everett  |50           |
+--|196        |Alana     |Walsh    |50           |
